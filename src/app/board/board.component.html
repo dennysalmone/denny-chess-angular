@@ -1,0 +1,11 @@
+<div id="wrapper">
+    <ng-container *ngFor="let row of chessboard">
+        <div class="board-row">
+            <ng-container *ngFor="let cell of row">
+                <div (click)="clickCell(cell)" class="board-cell"></div>
+            </ng-container>
+        </div>
+    </ng-container>
+</div>
+
+

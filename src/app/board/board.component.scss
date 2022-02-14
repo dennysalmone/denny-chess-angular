@@ -1,0 +1,22 @@
+#wrapper {
+    margin: auto;
+    background-color: antiquewhite;
+    height: 800px;
+    width: 800px;
+    display: flex;
+    flex-direction:column;
+    background-image: url('./board_back.png');
+    background-size: cover;
+}
+
+.board-row {
+    background-color: rgba(245, 222, 179, 0.027);
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+  
+.board-cell {
+    border: 1px solid;
+    flex: 1;
+}
