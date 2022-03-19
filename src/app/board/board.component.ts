@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core'
+import {Pawn} from './figures/figure';
 
 @Component({
     selector: 'app-board',
@@ -11,6 +12,7 @@ export class BoardComponent {
     chessboard: any[] = [];
     ngOnInit () {
         this.createBoard ()
+        this.createFigures ()
     }
     createBoard () {
         for (let i=0; i< this.boardLength; i++) {
@@ -20,14 +22,20 @@ export class BoardComponent {
             }
         }
     }
+    createFigures () {
+        // for (let j=0; j< this.boardLength; j++) {
+        //     this.chessboard[1][j] = 'white pawn'
+        // }
+        for (let j=0; j< this.boardLength; j++) {
+            this.chessboard[6][j] = new Pawn (j);
+        }
+    }
     clickCell(cell: String) {
-        console.log(cell)
+        console.log(this.chessboard)
     }
 
-
-
-    // increase($event : any) : void {
-    //     this.count++;
-    //     console.log($event);
-    // }
 }
+
+
+
+

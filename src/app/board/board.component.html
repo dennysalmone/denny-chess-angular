@@ -1,11 +1,15 @@
 <div id="wrapper">
-    <ng-container *ngFor="let row of chessboard">
+    <ng-container *ngFor="let row of chessboard; index as i">
         <div class="board-row">
-            <ng-container *ngFor="let cell of row">
-                <div (click)="clickCell(cell)" class="board-cell"></div>
+            <ng-container *ngFor="let cell of row; index as j">
+                <div 
+                [ngStyle]="{'background': (i + j) % 2 ? 'SaddleBrown' : 'wheat'}" 
+                (click)="clickCell(cell)" 
+                class="board-cell"
+                >
+                    <p *ngIf="cell">{{cell.name}}</p>
+            </div>
             </ng-container>
         </div>
     </ng-container>
 </div>
-
-
