@@ -1,19 +1,17 @@
 export interface Figure {
     color: boolean;
-    position: string;
-    possibleMoves(): any;
+    position: any;
     name: string;
+    image_src: string;
+    possibleMoves(): any;
+    chessboard: any;
+    choised: boolean;
 }
 
-export class Pawn implements Figure {
+export abstract class AbstractFigure {
     color = true;
-    name = 'Pawn';
-    position = 'null';
-    possibleMoves() {
-        return this
-    }
-    constructor(arg: number) {
-        this.temp = arg + 5
-    }
-    temp: number
+    position = {x:25, y:25};
+    image_src = 'null';
+    chessboard = 0;
+    choised = false;
 }

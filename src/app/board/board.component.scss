@@ -15,8 +15,21 @@
     flex-direction: row;
     flex: 1;
 }
-  
+
 .board-cell {
     border: 1px solid;
     flex: 1;
+}
+
+.my_img {
+    width: 85%;
+    height: 85%;
+    display: block;
+    margin: auto;
+    padding-top: 5%;
+}
+
+.choised {
+    background-color: aqua;
+    border: 5px solid;
 }
