@@ -3,11 +3,12 @@
         <div class="board-row">
             <ng-container *ngFor="let cell of row; index as x">
                 <div
-                [ngClass]="cell && (cell.choised)? 'choised':'' "
+                [ngClass]="{'choised': selectedFigure && (selectedFigure === cell)}"
                 [ngStyle]="{'background': (x + y) % 2 ? 'SaddleBrown' : 'wheat'}"
                 class="board-cell"
+                (click)="clickOnFigure(cell, {x,y})"
                 >
-                    <img *ngIf="cell" class="my_img" (click)="clickOnFigure(cell)" [src]="cell.image_src">
+                    <img *ngIf="cell" class="my_img"  [src]="cell.image_src">
             </div>
             </ng-container>
         </div>

@@ -6,6 +6,7 @@ import {King} from './figures/king';
 import {Bishop} from './figures/bishop';
 import {Queen} from './figures/queen';
 import {Knight} from './figures/knight';
+import {Position} from "./positions.moves/position";
 
 @Component({
     selector: 'app-board',
@@ -17,6 +18,8 @@ export class BoardComponent {
     boardLength: number = 8;
     chessboard: (null | Figure)[][] = [];
     turn: boolean = true;
+    selectedFigure: Figure | null = null;
+
     ngOnInit () {
         this.createBoard ()
         this.createFigures ()
@@ -29,30 +32,19 @@ export class BoardComponent {
             }
         }
     }
-    clickOnFigure(figure: Figure) {
-        for (let y=0; y<8; y++) {
-            for (let x=0; x<8; x++) {
-                if (this.chessboard[y][x] === figure) {
-                    console.log(this.chessboard[y][x])
-                    if (this.turn === (figure as Figure).color && !figure.choised) {
-                            figure.choised = true;
-                            figure.possibleMoves()
-                            for (let y=0; y<8; y++) {
-                                for (let x=0; x<8; x++) {    
-                                    if (this.chessboard[y][x] && this.chessboard[y][x] !== figure) { 
-                                        (this.chessboard[y][x] as Figure).choised = false;
+    clickOnFigure(figure: Figure | null, position: Position) {
+        if(figure && figure.color === this.turn) {
+          this.selectedFigure = figure;
+        } else if(this.selectedFigure) {
+          const prevPos = this.selectedFigure.position;
 
-
-                                    }
-                                }
-                            }
-                    }
-                    // return (this.chessboard[y][x] as Figure).possibleMoves()
-                }
-            }
+          this.chessboard[prevPos.y][prevPos.x] = null;
+          this.chessboard[position.y][position.x] = this.selectedFigure
+          this.selectedFigure.position = position;
+          this.selectedFigure = null;
         }
-        return;
     }
+
     createFigures () {
         for (let j=0; j<8; j++) {
             this.chessboard[6][j] = new Pawn (true, {y:6, x:j}, this.chessboard);
