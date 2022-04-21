@@ -5,7 +5,81 @@ import {AbstractFigure} from '../figures/figure'
 export class Knight extends AbstractFigure implements Figure  {
     name = 'Knight';
     possibleMoves() {
-        console.log(this.chessboard)
+        this.moviesForFigure = []
+            if (this.chessboard[this.position.y+2] && this.chessboard[this.position.y+2][this.position.x+1] === null) {
+                this.moviesForFigure.push({y: this.position.y+2, x: this.position.x+1})
+            }
+            if (this.chessboard[this.position.y+2] && this.chessboard[this.position.y+2][this.position.x+1]) {
+                if (this.chessboard[this.position.y+2][this.position.x+1].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y+2, x: this.position.x+1});
+                }
+            }
+            if (this.chessboard[this.position.y+2] && this.chessboard[this.position.y+2][this.position.x-1] === null) {
+                this.moviesForFigure.push({y: this.position.y+2, x: this.position.x-1})
+            }
+            if (this.chessboard[this.position.y+2] && this.chessboard[this.position.y+2][this.position.x-1]) {
+                if (this.chessboard[this.position.y+2][this.position.x-1].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y+2, x: this.position.x-1});
+                }
+            }
+            if (this.chessboard[this.position.y-2] && this.chessboard[this.position.y-2][this.position.x+1] === null) {
+                this.moviesForFigure.push({y: this.position.y-2, x: this.position.x+1})
+            }
+            if (this.chessboard[this.position.y-2] && this.chessboard[this.position.y-2][this.position.x+1]) {
+                if (this.chessboard[this.position.y-2][this.position.x+1].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y-2, x: this.position.x+1});
+                }
+            }
+            if (this.chessboard[this.position.y-2] && this.chessboard[this.position.y-2][this.position.x-1] === null) {
+                this.moviesForFigure.push({y: this.position.y-2, x: this.position.x-1})
+            }
+            if (this.chessboard[this.position.y-2] && this.chessboard[this.position.y-2][this.position.x-1]) {
+                if (this.chessboard[this.position.y-2][this.position.x-1].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y-2, x: this.position.x-1});
+                }
+            }
+            // 2 part
+            if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x+2] === null) {
+                this.moviesForFigure.push({y: this.position.y+1, x: this.position.x+2})
+            }
+            if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x+2]) {
+                if (this.chessboard[this.position.y+1][this.position.x+2].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y+1, x: this.position.x+2});
+                }
+            }
+            if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x-2] === null) {
+                this.moviesForFigure.push({y: this.position.y+1, x: this.position.x-2})
+            }
+            if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x-2]) {
+                if (this.chessboard[this.position.y+1][this.position.x-2].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y+1, x: this.position.x-2});
+                }
+            }
+            if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+2] === null) {
+                this.moviesForFigure.push({y: this.position.y-1, x: this.position.x+2})
+            }
+            if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+2]) {
+                if (this.chessboard[this.position.y-1][this.position.x+2].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y-1, x: this.position.x+2});
+                }
+            }
+            if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x-2] === null) {
+                this.moviesForFigure.push({y: this.position.y-1, x: this.position.x-2})
+            }
+            if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x-2]) {
+                if (this.chessboard[this.position.y-1][this.position.x-2].color === this.color) {
+                } else {
+                    this.moviesForFigure.push({y: this.position.y-1, x: this.position.x-2});
+                }
+            }
+        return this.moviesForFigure;
     }
     constructor(color: boolean, position: Position, chessboard: any) {
         super()

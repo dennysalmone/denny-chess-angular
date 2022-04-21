@@ -1,12 +1,9 @@
 #wrapper {
     margin: auto;
-    background-color: antiquewhite;
     height: 800px;
     width: 800px;
     display: flex;
     flex-direction:column;
-    background-image: url('./board_back.png');
-    background-size: cover;
 }
 
 .board-row {
@@ -30,6 +27,13 @@
 }
 
 .choised {
-    background-color: aqua;
-    border: 5px solid;
+    outline:3px dashed rgba(255, 0, 0, 0.827);
+    outline-offset:-10px;
+}
+
+.possible {
+    outline:3px dashed rgba(0, 180, 212, 0.827);
+    outline-offset:-10px;
+    height: 80px;
+    width: 80px;
 }

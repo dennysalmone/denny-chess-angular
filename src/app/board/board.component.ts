@@ -19,7 +19,8 @@ export class BoardComponent {
     chessboard: (null | Figure)[][] = [];
     turn: boolean = true;
     selectedFigure: Figure | null = null;
-
+    bcPossibleMoves: any;
+    possibleCells: any = [];
     ngOnInit () {
         this.createBoard ()
         this.createFigures ()
@@ -33,15 +34,31 @@ export class BoardComponent {
         }
     }
     clickOnFigure(figure: Figure | null, position: Position) {
+        let checkForMovie = function (bcPossibleMoves: any, position: Position) {
+            for (let i=0; i<bcPossibleMoves.length; i++) {
+                if (bcPossibleMoves[i].x === position.x && bcPossibleMoves[i].y === position.y) {
+                    return true
+                }
+            }
+            return false;
+        }
         if(figure && figure.color === this.turn) {
-          this.selectedFigure = figure;
-        } else if(this.selectedFigure) {
-          const prevPos = this.selectedFigure.position;
-
-          this.chessboard[prevPos.y][prevPos.x] = null;
-          this.chessboard[position.y][position.x] = this.selectedFigure
-          this.selectedFigure.position = position;
-          this.selectedFigure = null;
+            this.selectedFigure = figure;
+            if (figure !== null) {this.bcPossibleMoves = figure?.possibleMoves()}
+            console.log(this.bcPossibleMoves, 'bcPossibleMoves')
+            this.possibleCells = []
+            for (let k=0;k<this.bcPossibleMoves.length;k++) {
+                this.possibleCells[k] = this.chessboard[this.bcPossibleMoves[k].y][this.bcPossibleMoves[k].x]
+            }
+            console.log(this.possibleCells)
+        }
+        if(this.selectedFigure && checkForMovie(this.bcPossibleMoves, position)) {
+            this.possibleCells = []
+            const prevPos = this.selectedFigure.position;
+            this.chessboard[prevPos.y][prevPos.x] = null;
+            this.chessboard[position.y][position.x] = this.selectedFigure
+            this.selectedFigure.position = position;
+            this.selectedFigure = null;
         }
     }
 
@@ -52,6 +69,7 @@ export class BoardComponent {
         for (let j=0; j<8; j++) {
             this.chessboard[1][j] = new Pawn (false, {y:1, x:j}, this.chessboard);
         }
+        this.chessboard[5][2] = new Rook (false, {y:7, x:0}, this.chessboard); //test
         this.chessboard[7][0] = new Rook (true, {y:7, x:0}, this.chessboard);
         this.chessboard[7][7] = new Rook (true, {y:7, x:7}, this.chessboard);
         this.chessboard[0][0] = new Rook (false, {y:0, x:0}, this.chessboard);

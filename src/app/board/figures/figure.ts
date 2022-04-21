@@ -12,6 +12,7 @@ export abstract class AbstractFigure {
     color = true;
     position = {x:25, y:25};
     image_src = 'null';
-    chessboard = 0;
+    chessboard: any = 0;
     choised = false;
+    moviesForFigure = [{}];
 }
