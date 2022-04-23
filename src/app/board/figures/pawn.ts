@@ -10,9 +10,10 @@ export class Pawn extends AbstractFigure implements Figure  {
         if (this.color && this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x] === null) {
             this.moviesForFigure.push({y: this.position.y-1, x: this.position.x})
         }
-        if (this.position.y === 6 && this.color && this.chessboard[this.position.y-1] && this.chessboard[this.position.y-2][this.position.x] === null) {
+        if (this.position.y === 6 && this.color && this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x] === null && this.chessboard[this.position.y-2][this.position.x] === null) {
             this.moviesForFigure.push({y: this.position.y-2, x: this.position.x})
         }        
+        
         if (this.color && this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+1]) {
             if (this.chessboard[this.position.y-1][this.position.x+1].color === this.color) {
             } else {
@@ -29,7 +30,7 @@ export class Pawn extends AbstractFigure implements Figure  {
         if (!this.color && this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x] === null) {
             this.moviesForFigure.push({y: this.position.y+1, x: this.position.x})
         }
-        if (this.position.y === 6 && !this.color && this.chessboard[this.position.y-1] && this.chessboard[this.position.y+2][this.position.x] === null) {
+        if (this.position.y === 1 && !this.color && this.chessboard[this.position.y-1]&& this.chessboard[this.position.y+1][this.position.x] === null && this.chessboard[this.position.y+2][this.position.x] === null) {
             this.moviesForFigure.push({y: this.position.y+2, x: this.position.x})
         }        
         if (!this.color && this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x+1]) {

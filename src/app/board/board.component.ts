@@ -20,7 +20,6 @@ export class BoardComponent {
     turn: boolean = true;
     selectedFigure: Figure | null = null;
     bcPossibleMoves: any;
-    possibleCells: any = [];
     ngOnInit () {
         this.createBoard ()
         this.createFigures ()
@@ -29,36 +28,39 @@ export class BoardComponent {
         for (let i=0; i<8; i++) {
             this.chessboard.push([])
             for (let j=0; j<8; j++) {
-                this.chessboard[i].push(null)
+                this.chessboard[i].push(null);
             }
         }
     }
-    clickOnFigure(figure: Figure | null, position: Position) {
-        let checkForMovie = function (bcPossibleMoves: any, position: Position) {
-            for (let i=0; i<bcPossibleMoves.length; i++) {
-                if (bcPossibleMoves[i].x === position.x && bcPossibleMoves[i].y === position.y) {
-                    return true
-                }
+    checkForMovie (bcPossibleMoves: any, position: Position) {
+        for (let i=0; i<bcPossibleMoves.length; i++) {
+            if (bcPossibleMoves[i].x === position.x && bcPossibleMoves[i].y === position.y) {
+                return true;
             }
-            return false;
+        }
+        return false;
+    }
+    clickOnFigure(figure: Figure | null, position: Position) {
+        if (this.selectedFigure === figure) {
+            this.bcPossibleMoves = [];
+            this.selectedFigure = null;
+            return;
         }
         if(figure && figure.color === this.turn) {
             this.selectedFigure = figure;
             if (figure !== null) {this.bcPossibleMoves = figure?.possibleMoves()}
             console.log(this.bcPossibleMoves, 'bcPossibleMoves')
-            this.possibleCells = []
-            for (let k=0;k<this.bcPossibleMoves.length;k++) {
-                this.possibleCells[k] = this.chessboard[this.bcPossibleMoves[k].y][this.bcPossibleMoves[k].x]
-            }
-            console.log(this.possibleCells)
+            return;
         }
-        if(this.selectedFigure && checkForMovie(this.bcPossibleMoves, position)) {
-            this.possibleCells = []
+        if(this.selectedFigure && this.checkForMovie(this.bcPossibleMoves, position)) {
             const prevPos = this.selectedFigure.position;
             this.chessboard[prevPos.y][prevPos.x] = null;
             this.chessboard[position.y][position.x] = this.selectedFigure
             this.selectedFigure.position = position;
+            this.bcPossibleMoves = [];
             this.selectedFigure = null;
+            this.turn = !this.turn
+            return;
         }
     }
 
@@ -69,7 +71,6 @@ export class BoardComponent {
         for (let j=0; j<8; j++) {
             this.chessboard[1][j] = new Pawn (false, {y:1, x:j}, this.chessboard);
         }
-        this.chessboard[5][2] = new Rook (false, {y:7, x:0}, this.chessboard); //test
         this.chessboard[7][0] = new Rook (true, {y:7, x:0}, this.chessboard);
         this.chessboard[7][7] = new Rook (true, {y:7, x:7}, this.chessboard);
         this.chessboard[0][0] = new Rook (false, {y:0, x:0}, this.chessboard);
@@ -90,7 +91,17 @@ export class BoardComponent {
     clickCell(x: number, y: number) {
         console.log(x, y)
     }
-
+    isCellPossibleMoves(position: Position) {
+        if(!this.bcPossibleMoves) {
+            this.bcPossibleMoves = [];
+        }
+        const ifPossible: boolean = this.bcPossibleMoves.some((posPos: {y: number, x: number}) => (posPos.x === position.x) && (posPos.y === position.y))
+        if (ifPossible) {
+            return '#883838';
+        } else {
+            return (position.x + position.y) % 2 ? '#383838' : 'wheat';
+        }
+    }
 }
 
 

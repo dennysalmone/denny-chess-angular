@@ -4,8 +4,8 @@
             <ng-container *ngFor="let cell of row; index as x">
                 <div                
                 [ngClass]="{'choised': selectedFigure && (selectedFigure === cell)}"
-                [ngStyle]="{'background': (x + y) % 2 ? '#383838' : 'wheat'}"
                 class="board-cell"
+                [ngStyle]="{'background': isCellPossibleMoves({y,x})}"
                 (click)="clickOnFigure(cell, {y,x})"
                 >
                     <img *ngIf="cell" class="my_img"  [src]="cell.image_src">
