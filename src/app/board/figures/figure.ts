@@ -1,3 +1,5 @@
+import { Position } from "../positions.moves/position";
+
 export interface Figure {
     color: boolean;
     position: any;
@@ -15,4 +17,5 @@ export abstract class AbstractFigure {
     chessboard: any = 0;
     choised = false;
     moviesForFigure = [{}];
+    underProtection: any;
 }

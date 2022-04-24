@@ -10,6 +10,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+2, x: this.position.x+1})
             }
             if (this.chessboard[this.position.y+2] && this.chessboard[this.position.y+2][this.position.x+1]) {
+                this.underProtection.push({y: this.position.y+2, x: this.position.x+1}) // underProtectionTest
                 if (this.chessboard[this.position.y+2][this.position.x+1].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y+2, x: this.position.x+1});
@@ -19,6 +20,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+2, x: this.position.x-1})
             }
             if (this.chessboard[this.position.y+2] && this.chessboard[this.position.y+2][this.position.x-1]) {
+                this.underProtection.push({y: this.position.y+2, x: this.position.x-1}) // underProtectionTest
                 if (this.chessboard[this.position.y+2][this.position.x-1].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y+2, x: this.position.x-1});
@@ -28,6 +30,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-2, x: this.position.x+1})
             }
             if (this.chessboard[this.position.y-2] && this.chessboard[this.position.y-2][this.position.x+1]) {
+                this.underProtection.push({y: this.position.y-2, x: this.position.x+1}) // underProtectionTest
                 if (this.chessboard[this.position.y-2][this.position.x+1].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y-2, x: this.position.x+1});
@@ -37,6 +40,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-2, x: this.position.x-1})
             }
             if (this.chessboard[this.position.y-2] && this.chessboard[this.position.y-2][this.position.x-1]) {
+                this.underProtection.push({y: this.position.y-2, x: this.position.x-1}) // underProtectionTest
                 if (this.chessboard[this.position.y-2][this.position.x-1].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y-2, x: this.position.x-1});
@@ -47,6 +51,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+1, x: this.position.x+2})
             }
             if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x+2]) {
+                this.underProtection.push({y: this.position.y+1, x: this.position.x+2}) // underProtectionTest
                 if (this.chessboard[this.position.y+1][this.position.x+2].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y+1, x: this.position.x+2});
@@ -56,6 +61,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+1, x: this.position.x-2})
             }
             if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x-2]) {
+                this.underProtection.push({y: this.position.y+1, x: this.position.x-2}) // underProtectionTest
                 if (this.chessboard[this.position.y+1][this.position.x-2].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y+1, x: this.position.x-2});
@@ -65,6 +71,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-1, x: this.position.x+2})
             }
             if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+2]) {
+                this.underProtection.push({y: this.position.y-1, x: this.position.x+2}) // underProtectionTest
                 if (this.chessboard[this.position.y-1][this.position.x+2].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y-1, x: this.position.x+2});
@@ -74,6 +81,7 @@ export class Knight extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-1, x: this.position.x-2})
             }
             if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x-2]) {
+                this.underProtection.push({y: this.position.y-1, x: this.position.x-2}) // underProtectionTest
                 if (this.chessboard[this.position.y-1][this.position.x-2].color === this.color) {
                 } else {
                     this.moviesForFigure.push({y: this.position.y-1, x: this.position.x-2});
@@ -81,7 +89,7 @@ export class Knight extends AbstractFigure implements Figure  {
             }
         return this.moviesForFigure;
     }
-    constructor(color: boolean, position: Position, chessboard: any) {
+    constructor(color: boolean, position: Position, chessboard: any, underProtection: any) {
         super()
         if (color) {
             this.image_src = '../../../assets/icons/white_knight.png'
@@ -91,5 +99,6 @@ export class Knight extends AbstractFigure implements Figure  {
         this.color = color;
         this.position = position;
         this.chessboard = chessboard;
+        this.underProtection = underProtection;
     }
 }

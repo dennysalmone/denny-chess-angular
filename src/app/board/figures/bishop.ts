@@ -11,6 +11,7 @@ export class Bishop extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+i, x: this.position.x-i})
             }
             if (this.chessboard[this.position.y+i] && this.chessboard[this.position.y+i][this.position.x-i]) {
+                this.underProtection.push({y: this.position.y+i, x: this.position.x-i}) // underProtectionTest
                 if (this.chessboard[this.position.y+i][this.position.x-i].color === this.color) {
                     break;
                 } else {
@@ -24,6 +25,7 @@ export class Bishop extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-i, x: this.position.x+i})
             }
             if (this.chessboard[this.position.y-i] && this.chessboard[this.position.y-i][this.position.x+i]) {
+                this.underProtection.push({y: this.position.y-i, x: this.position.x+i}) // underProtectionTest
                 if (this.chessboard[this.position.y-i][this.position.x+i].color === this.color) {
                     break;
                 } else {
@@ -37,6 +39,7 @@ export class Bishop extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+i, x: this.position.x+i})
             }
             if (this.chessboard[this.position.y+i] && this.chessboard[this.position.y+i][this.position.x+i]) {
+                this.underProtection.push({y: this.position.y+i, x: this.position.x+i}) // underProtectionTest
                 if (this.chessboard[this.position.y+i][this.position.x+i].color === this.color) {
                     break;
                 } else {
@@ -50,6 +53,7 @@ export class Bishop extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-i, x: this.position.x-i})
             }
             if (this.chessboard[this.position.y-i] && this.chessboard[this.position.y-i][this.position.x-i]) {
+                this.underProtection.push({y: this.position.y-i, x: this.position.x-i}) // underProtectionTest
                 if (this.chessboard[this.position.y-i][this.position.x-i].color === this.color) {
                     break;
                 } else {
@@ -60,7 +64,7 @@ export class Bishop extends AbstractFigure implements Figure  {
         }
         return this.moviesForFigure;
     }
-    constructor(color: boolean, position: Position, chessboard: any) {
+    constructor(color: boolean, position: Position, chessboard: any, underProtection: any) {
         super();
         if (color) {
             this.image_src = '../../../assets/icons/white_bishop.png'
@@ -70,5 +74,6 @@ export class Bishop extends AbstractFigure implements Figure  {
         this.color = color;
         this.position = position;
         this.chessboard = chessboard;
+        this.underProtection = underProtection;
     }
 }

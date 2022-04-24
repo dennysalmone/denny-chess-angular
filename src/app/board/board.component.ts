@@ -19,11 +19,14 @@ export class BoardComponent {
     chessboard: (null | Figure)[][] = [];
     turn: boolean = true;
     selectedFigure: Figure | null = null;
-    bcPossibleMoves: any;
+    underProtection: any = [];
+    bcPossibleMoves = [];
+
     ngOnInit () {
         this.createBoard ()
         this.createFigures ()
     }
+
     createBoard () {
         for (let i=0; i<8; i++) {
             this.chessboard.push([])
@@ -32,6 +35,7 @@ export class BoardComponent {
             }
         }
     }
+
     checkForMovie (bcPossibleMoves: any, position: Position) {
         for (let i=0; i<bcPossibleMoves.length; i++) {
             if (bcPossibleMoves[i].x === position.x && bcPossibleMoves[i].y === position.y) {
@@ -40,16 +44,32 @@ export class BoardComponent {
         }
         return false;
     }
-    clickOnFigure(figure: Figure | null, position: Position) {
+
+    checkCellsUnderAttack () {
+        this.underProtection.length = 0
+        let cellsUnderAttack = [];
+        for (let i=0; i<8; i++) {
+            for (let j=0; j<8; j++) {
+                if (this.chessboard[i][j]?.color === !this.turn) {
+                    cellsUnderAttack.push(this.chessboard[i][j]?.possibleMoves())
+                }
+            }
+        }
+        console.log(this.underProtection, ' - cells under protection')
+        return this.underProtection;
+    }
+
+    clickOnFigure(figure: (Figure | null), position: Position) {
         if (this.selectedFigure === figure) {
+            this.checkCellsUnderAttack ()
             this.bcPossibleMoves = [];
             this.selectedFigure = null;
             return;
         }
         if(figure && figure.color === this.turn) {
+            this.checkCellsUnderAttack ()
             this.selectedFigure = figure;
             if (figure !== null) {this.bcPossibleMoves = figure?.possibleMoves()}
-            console.log(this.bcPossibleMoves, 'bcPossibleMoves')
             return;
         }
         if(this.selectedFigure && this.checkForMovie(this.bcPossibleMoves, position)) {
@@ -66,35 +86,30 @@ export class BoardComponent {
 
     createFigures () {
         for (let j=0; j<8; j++) {
-            this.chessboard[6][j] = new Pawn (true, {y:6, x:j}, this.chessboard);
+            this.chessboard[6][j] = new Pawn (true, {y:6, x:j}, this.chessboard, this.underProtection);
         }
         for (let j=0; j<8; j++) {
-            this.chessboard[1][j] = new Pawn (false, {y:1, x:j}, this.chessboard);
+            this.chessboard[1][j] = new Pawn (false, {y:1, x:j}, this.chessboard, this.underProtection);
         }
-        this.chessboard[7][0] = new Rook (true, {y:7, x:0}, this.chessboard);
-        this.chessboard[7][7] = new Rook (true, {y:7, x:7}, this.chessboard);
-        this.chessboard[0][0] = new Rook (false, {y:0, x:0}, this.chessboard);
-        this.chessboard[0][7] = new Rook (false, {y:0, x:7}, this.chessboard);
-        this.chessboard[7][1] = new Knight (true, {y:7, x:1}, this.chessboard);
-        this.chessboard[7][6] = new Knight (true, {y:7, x:6}, this.chessboard);
-        this.chessboard[0][1] = new Knight (false, {y:0, x:1}, this.chessboard);
-        this.chessboard[0][6] = new Knight (false, {y:0, x:6}, this.chessboard);
-        this.chessboard[7][2] = new Bishop (true, {y:7, x:2}, this.chessboard);
-        this.chessboard[7][5] = new Bishop (true, {y:7, x:5}, this.chessboard);
-        this.chessboard[0][2] = new Bishop (false, {y:0, x:2}, this.chessboard);
-        this.chessboard[0][5] = new Bishop (false, {y:0, x:5}, this.chessboard);
-        this.chessboard[7][4] = new King (true, {y:7, x:4}, this.chessboard);
-        this.chessboard[0][4] = new King (false, {y:0, x:4}, this.chessboard);
-        this.chessboard[7][3] = new Queen (true, {y:7, x:3}, this.chessboard);
-        this.chessboard[0][3] = new Queen (false, {y:0, x:3}, this.chessboard);
+        this.chessboard[7][0] = new Rook (true, {y:7, x:0}, this.chessboard, this.underProtection);
+        this.chessboard[7][7] = new Rook (true, {y:7, x:7}, this.chessboard, this.underProtection);
+        this.chessboard[0][0] = new Rook (false, {y:0, x:0}, this.chessboard, this.underProtection);
+        this.chessboard[0][7] = new Rook (false, {y:0, x:7}, this.chessboard, this.underProtection);
+        this.chessboard[7][1] = new Knight (true, {y:7, x:1}, this.chessboard, this.underProtection);
+        this.chessboard[7][6] = new Knight (true, {y:7, x:6}, this.chessboard, this.underProtection);
+        this.chessboard[0][1] = new Knight (false, {y:0, x:1}, this.chessboard, this.underProtection);
+        this.chessboard[0][6] = new Knight (false, {y:0, x:6}, this.chessboard, this.underProtection);
+        this.chessboard[7][2] = new Bishop (true, {y:7, x:2}, this.chessboard, this.underProtection);
+        this.chessboard[7][5] = new Bishop (true, {y:7, x:5}, this.chessboard, this.underProtection);
+        this.chessboard[0][2] = new Bishop (false, {y:0, x:2}, this.chessboard, this.underProtection);
+        this.chessboard[0][5] = new Bishop (false, {y:0, x:5}, this.chessboard, this.underProtection);
+        this.chessboard[7][4] = new King (true, {y:7, x:4}, this.chessboard, this.underProtection);
+        this.chessboard[0][4] = new King (false, {y:0, x:4}, this.chessboard, this.underProtection);
+        this.chessboard[7][3] = new Queen (true, {y:7, x:3}, this.chessboard, this.underProtection);
+        this.chessboard[0][3] = new Queen (false, {y:0, x:3}, this.chessboard, this.underProtection);
     }
-    clickCell(x: number, y: number) {
-        console.log(x, y)
-    }
+
     isCellPossibleMoves(position: Position) {
-        if(!this.bcPossibleMoves) {
-            this.bcPossibleMoves = [];
-        }
         const ifPossible: boolean = this.bcPossibleMoves.some((posPos: {y: number, x: number}) => (posPos.x === position.x) && (posPos.y === position.y))
         if (ifPossible) {
             return '#883838';
