@@ -4,6 +4,35 @@ import {AbstractFigure} from '../figures/figure'
 
 export class Pawn extends AbstractFigure implements Figure  {
     name = 'Pawn';
+    isPawn: boolean = true;
+    possibleAttackPawn () {
+        let protectedCell: any[] = [];
+        if (this.color) {
+            if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x-1] !== 'undefined') {
+                if(this.position.y-1>=0 && this.position.y-1<8 && this.position.x-1>=0 && this.position.x-1<8) {
+                    protectedCell.push({y: this.position.y-1, x: this.position.x-1}) // protectedCellTest
+                }
+            }
+            if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+1] !== 'undefined') {
+                if(this.position.y-1>=0 && this.position.y-1<8 && this.position.x+1>=0 && this.position.x+1<8) {
+                    protectedCell.push({y: this.position.y-1, x: this.position.x+1}) // protectedCellTest
+                }
+            }
+        }
+        if (!this.color) {
+            if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x-1] !== 'undefined') {
+                if(this.position.y+1>=0 && this.position.y+1<8 && this.position.x-1>=0 && this.position.x-1<8) {
+                    protectedCell.push({y: this.position.y+1, x: this.position.x-1}) // protectedCellTest
+                }
+            }
+            if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x+1] !== 'undefined') {
+                if(this.position.y+1>=0 && this.position.y+1<8 && this.position.x+1>=0 && this.position.x+1<8) {
+                    protectedCell.push({y: this.position.y+1, x: this.position.x+1}) // protectedCellTest
+                }
+            }
+        }
+        return protectedCell;
+    }
     possibleMoves() {
         this.moviesForFigure = []
         //for white
@@ -15,18 +44,18 @@ export class Pawn extends AbstractFigure implements Figure  {
         }        
         if (this.color) {
             if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x-1] !== 'undefined') {
-                this.underProtection.push({y: this.position.y-1, x: this.position.x-1}) // underProtectionTest
+                // this.underProtection.push({y: this.position.y-1, x: this.position.x-1}) // underProtectionTest
             }
             if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+1] !== 'undefined') {
-                this.underProtection.push({y: this.position.y-1, x: this.position.x+1}) // underProtectionTest
+                // this.underProtection.push({y: this.position.y-1, x: this.position.x+1}) // underProtectionTest
             }
         }
         if (!this.color) {
             if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x-1] !== 'undefined') {
-                this.underProtection.push({y: this.position.y+1, x: this.position.x-1}) // underProtectionTest
+                // this.underProtection.push({y: this.position.y+1, x: this.position.x-1}) // underProtectionTest
             }
             if (this.chessboard[this.position.y+1] && this.chessboard[this.position.y+1][this.position.x+1] !== 'undefined') {
-                this.underProtection.push({y: this.position.y+1, x: this.position.x+1}) // underProtectionTest
+                // this.underProtection.push({y: this.position.y+1, x: this.position.x+1}) // underProtectionTest
             }
         }
         if (this.color && this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x+1]) {
@@ -62,7 +91,7 @@ export class Pawn extends AbstractFigure implements Figure  {
         }
         return this.moviesForFigure;
     }
-    constructor(color: boolean, position: Position, chessboard: any, underProtection: any) {
+    constructor(color: boolean, position: Position, chessboard: any) {
         super();
         if (color) {
             this.image_src = '../../../assets/icons/white_pawn.png'
@@ -72,6 +101,5 @@ export class Pawn extends AbstractFigure implements Figure  {
         this.color = color;
         this.position = position;
         this.chessboard = chessboard;
-        this.underProtection = underProtection;
     }
 }

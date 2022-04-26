@@ -4,15 +4,19 @@ import {AbstractFigure} from '../figures/figure'
 
 export class Rook extends AbstractFigure implements Figure  {
     name = 'Rook';
-    possibleMoves() {
+    rookNotMove = true;
+    possibleMoves(isUnderAttack: boolean) {
         this.moviesForFigure = []
+        // like a rook
         for (let i=1; i<8; i++) {
             if (this.chessboard[this.position.y][this.position.x-i] === null) {
                 this.moviesForFigure.push({y: this.position.y, x: this.position.x-i})
             }
             if (this.chessboard[this.position.y][this.position.x-i]) {
-                this.underProtection.push({y: this.position.y, x: this.position.x-i}) // underProtectionTest
                 if (this.chessboard[this.position.y][this.position.x-i].color === this.color) {
+                    if(isUnderAttack) {
+                        this.moviesForFigure.push({y: this.position.y, x: this.position.x-i});
+                    }
                     break;
                 } else {
                     this.moviesForFigure.push({y: this.position.y, x: this.position.x-i});
@@ -25,8 +29,10 @@ export class Rook extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y, x: this.position.x+i})
             }
             if (this.chessboard[this.position.y][this.position.x+i]) {
-                this.underProtection.push({y: this.position.y, x: this.position.x+i}) // underProtectionTest
                 if (this.chessboard[this.position.y][this.position.x+i].color === this.color) {
+                    if(isUnderAttack) {
+                        this.moviesForFigure.push({y: this.position.y, x: this.position.x+i});
+                    }
                     break;
                 } else {
                     this.moviesForFigure.push({y: this.position.y, x: this.position.x+i});
@@ -39,8 +45,10 @@ export class Rook extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y+i, x: this.position.x})
             }
             if (this.chessboard[this.position.y+i] && this.chessboard[this.position.y+i][this.position.x]) {
-                this.underProtection.push({y: this.position.y+i, x: this.position.x}) // underProtectionTest
                 if (this.chessboard[this.position.y+i][this.position.x].color === this.color) {
+                    if(isUnderAttack) {
+                        this.moviesForFigure.push({y: this.position.y+i, x: this.position.x});
+                    }
                     break;
                 } else {
                     this.moviesForFigure.push({y: this.position.y+i, x: this.position.x});
@@ -53,18 +61,20 @@ export class Rook extends AbstractFigure implements Figure  {
                 this.moviesForFigure.push({y: this.position.y-i, x: this.position.x})
             }
             if (this.chessboard[this.position.y-i] && this.chessboard[this.position.y-i][this.position.x]) {
-                this.underProtection.push({y: this.position.y-i, x: this.position.x}) // underProtectionTest
                 if (this.chessboard[this.position.y-i][this.position.x].color === this.color) {
+                    if(isUnderAttack) {
+                        this.moviesForFigure.push({y: this.position.y+i, x: this.position.x});
+                    }
                     break;
                 } else {
                     this.moviesForFigure.push({y: this.position.y-i, x: this.position.x});
                     break;
                 }
             }
-        }
+        } 
         return this.moviesForFigure;
     }
-    constructor(color: boolean, position: Position, chessboard: any, underProtection: any) {
+    constructor(color: boolean, position: Position, chessboard: any) {
         super();
         if (color) {
             this.image_src = '../../../assets/icons/white_rook.png'
@@ -74,6 +84,5 @@ export class Rook extends AbstractFigure implements Figure  {
         this.color = color;
         this.position = position;
         this.chessboard = chessboard;
-        this.underProtection = underProtection;
     }
 }

@@ -4,6 +4,8 @@ import {AbstractFigure} from '../figures/figure'
 
 export class King extends AbstractFigure implements Figure  {
     name = 'King';
+    isKing = true;
+    kingNotMove = true;
    
     possibleMoves() {
     this.moviesForFigure = []
@@ -74,7 +76,7 @@ export class King extends AbstractFigure implements Figure  {
 
     return this.moviesForFigure;
     }
-    constructor(color: boolean, position: Position, chessboard: any, underProtection: any) {
+    constructor(color: boolean, position: Position, chessboard: any) {
         super()
         if (color) {
             this.image_src = '../../../assets/icons/white_king.png'
@@ -84,6 +86,5 @@ export class King extends AbstractFigure implements Figure  {
         this.color = color;
         this.position = position;
         this.chessboard = chessboard;
-        this.underProtection = underProtection;
     }
 }

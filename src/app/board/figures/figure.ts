@@ -5,7 +5,7 @@ export interface Figure {
     position: any;
     name: string;
     image_src: string;
-    possibleMoves(): any;
+    possibleMoves(arg: boolean): any;
     chessboard: any;
     choised: boolean;
 }
