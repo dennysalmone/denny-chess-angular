@@ -20,9 +20,9 @@ export class BoardComponent {
     chessboard: (null | Figure)[][] = [];
     turn: boolean = true;
     selectedFigure: Figure | null = null;
-    underProtection: any = [];
     bcPossibleMoves = [];
-    kingUnderShah: boolean = false;
+    // underAttack: Position[] = this.checkCellsUnderAttack ()
+    // kingUnderShah: boolean = false;
 
     ngOnInit () {
         this.createBoard ()
@@ -72,8 +72,7 @@ export class BoardComponent {
         return false;
     }
 
-    checkCellsUnderAttack () {
-        this.underProtection.length = 0
+    checkCellsUnderAttack (): Position[] {
         let cellsUnderAttack = [];
         for (let i=0; i<8; i++) {
             for (let j=0; j<8; j++) {
@@ -84,6 +83,7 @@ export class BoardComponent {
                 }
             }
         }
+        console.log(Array.from([...cellsUnderAttack.flat()]))
         return Array.from([...cellsUnderAttack.flat()]);
     }
 
@@ -105,6 +105,7 @@ export class BoardComponent {
             this.chessboard[prevPos.y][prevPos.x] = null;
             this.chessboard[position.y][position.x] = this.selectedFigure
             this.selectedFigure.position = position;
+            this.kingOrRookHadMove (this.chessboard[position.y][position.x] as Figure);
             this.onTurnChange()
             this.pawnPromotionCheck()
             this.isKingUnderShah ()
@@ -115,18 +116,25 @@ export class BoardComponent {
     figureUnselect () {
         this.selectedFigure = null;
     }
+
+    kingOrRookHadMove (figure: Figure) {
+        if ((figure as King) && (figure as King).kingNotMove) {
+            (figure as King).kingNotMove = false;
+        }
+        if ((figure as Rook) && (figure as Rook).rookNotMove) {
+            (figure as Rook).rookNotMove = false;
+        }
+    }
     
     pawnPromotionCheck() {
         for (let i=0; i<8; i++) {
-            if(this.chessboard[0][i]) {
-                if ((this.chessboard[0][i] as Pawn).isPawn) {
-                    this.chessboard[0][i] = null;
-                    this.chessboard[0][i] = new Queen (true, {y:0, x:i}, this.chessboard);
-                }
-                if ((this.chessboard[7][i] as Pawn).isPawn) {
-                    this.chessboard[7][i] = null;
-                    this.chessboard[7][i] = new Queen (false, {y:7, x:i}, this.chessboard);
-                }
+            if (this.chessboard[0][i] && (this.chessboard[0][i] as Pawn).isPawn) {
+                this.chessboard[0][i] = null;
+                this.chessboard[0][i] = new Queen (true, {y:0, x:i}, this.chessboard);
+            }
+            if (this.chessboard[7][i] && (this.chessboard[7][i] as Pawn).isPawn) {
+                this.chessboard[7][i] = null;
+                this.chessboard[7][i] = new Queen (false, {y:7, x:i}, this.chessboard);
             }
         } 
     }

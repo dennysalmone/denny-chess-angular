@@ -1,11 +1,13 @@
 import {Figure} from '../figures/figure';
 import {Position} from '../positions.moves/position'
 import {AbstractFigure} from '../figures/figure'
+import {Rook} from './rook';
 
 export class King extends AbstractFigure implements Figure  {
     name = 'King';
     isKing = true;
     kingNotMove = true;
+
    
     possibleMoves() {
     this.moviesForFigure = []
@@ -74,6 +76,19 @@ export class King extends AbstractFigure implements Figure  {
         this.moviesForFigure.push({y: this.position.y-1, x: this.position.x});
     }
 
+    // Castling white
+
+    // if (this.chessboard[7][4] && (this.chessboard[7][4] as King).kingNotMove &&
+    // this.chessboard[7][7] && (this.chessboard[7][7] as Rook).rookNotMove &&
+    // this.chessboard[7][6] === null &&
+    // this.chessboard[7][5] === null &&
+    // this.chessboard.kingUnderShah === false
+    // ) {
+
+    // }
+
+    // Castling black
+
     return this.moviesForFigure;
     }
     constructor(color: boolean, position: Position, chessboard: any) {
@@ -86,5 +101,6 @@ export class King extends AbstractFigure implements Figure  {
         this.color = color;
         this.position = position;
         this.chessboard = chessboard;
+
     }
 }
