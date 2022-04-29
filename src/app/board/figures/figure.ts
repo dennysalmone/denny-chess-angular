@@ -1,12 +1,14 @@
 import { Position } from "../positions.moves/position";
+import { Chessboard, PositionArray } from "../positions.moves/types";
 
 export interface Figure {
+    moviesForFigure: any;
     color: boolean;
     position: any;
     name: string;
     image_src: string;
     possibleMoves(arg: boolean): any;
-    chessboard: any;
+    chessboard: Chessboard;
     choised: boolean;
 }
 
@@ -16,6 +18,6 @@ export abstract class AbstractFigure {
     image_src = 'null';
     chessboard: any = 0;
     choised = false;
-    moviesForFigure = [{}];
+    moviesForFigure: PositionArray = [];
     underProtection: any;
 }

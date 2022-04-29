@@ -7,7 +7,7 @@ import {Bishop} from './figures/bishop';
 import {Queen} from './figures/queen';
 import {Knight} from './figures/knight';
 import {Position} from "./positions.moves/position";
-import {getStraightMoves} from './positions.moves/moves';
+import {Cell, Chessboard, PositionArray} from './positions.moves/types';
 
 @Component({
     selector: 'app-board',
@@ -16,20 +16,17 @@ import {getStraightMoves} from './positions.moves/moves';
 })
 
 export class BoardComponent {
-    boardLength: number = 8;
-    chessboard: (null | Figure)[][] = [];
+    chessboard: Chessboard = [];
     turn: boolean = true;
-    selectedFigure: Figure | null = null;
-    bcPossibleMoves = [];
-    // underAttack: Position[] = this.checkCellsUnderAttack ()
-    // kingUnderShah: boolean = false;
+    selectedFigure: Cell = null;
+    bcPossibleMoves: PositionArray = [];
 
     ngOnInit () {
         this.createBoard ()
         this.createFigures ()
     }
 
-    createFigures () {
+    createFigures (): void {
         for (let j=0; j<8; j++) {
             this.chessboard[6][j] = new Pawn (true, {y:6, x:j}, this.chessboard);
         }
@@ -54,7 +51,7 @@ export class BoardComponent {
         this.chessboard[0][3] = new Queen (false, {y:0, x:3}, this.chessboard);
     }
 
-    createBoard () {
+    createBoard (): void {
         for (let i=0; i<8; i++) {
             this.chessboard.push([])
             for (let j=0; j<8; j++) {
@@ -63,7 +60,7 @@ export class BoardComponent {
         }
     }
 
-    checkForMovie (bcPossibleMoves: any, position: Position) {
+    checkForMovie (bcPossibleMoves: any, position: Position): boolean {
         for (let i=0; i<bcPossibleMoves.length; i++) {
             if (bcPossibleMoves[i].x === position.x && bcPossibleMoves[i].y === position.y) {
                 return true;
@@ -72,7 +69,7 @@ export class BoardComponent {
         return false;
     }
 
-    checkCellsUnderAttack (): Position[] {
+    checkCellsUnderAttack (): PositionArray {
         let cellsUnderAttack = [];
         for (let i=0; i<8; i++) {
             for (let j=0; j<8; j++) {
@@ -83,19 +80,16 @@ export class BoardComponent {
                 }
             }
         }
-        console.log(Array.from([...cellsUnderAttack.flat()]))
         return Array.from([...cellsUnderAttack.flat()]);
     }
 
-    clickOnFigure(figure: (Figure | null), position: Position): void {
+    clickOnFigure(figure: (Cell), position: Position): void {
         if (this.selectedFigure === figure) {
-            // this.checkCellsUnderAttack ()
             this.bcPossibleMoves = [];
             this.figureUnselect ()
             return;
         }
         if(figure && figure.color === this.turn) {
-            // this.checkCellsUnderAttack ()
             this.selectedFigure = figure;
             if (figure !== null) {this.bcPossibleMoves = figure?.possibleMoves(false)}
             return;
@@ -113,11 +107,11 @@ export class BoardComponent {
         }
     }
 
-    figureUnselect () {
+    figureUnselect (): void {
         this.selectedFigure = null;
     }
 
-    kingOrRookHadMove (figure: Figure) {
+    kingOrRookHadMove (figure: Figure): void {
         if ((figure as King) && (figure as King).kingNotMove) {
             (figure as King).kingNotMove = false;
         }
@@ -126,7 +120,7 @@ export class BoardComponent {
         }
     }
     
-    pawnPromotionCheck() {
+    pawnPromotionCheck(): void {
         for (let i=0; i<8; i++) {
             if (this.chessboard[0][i] && (this.chessboard[0][i] as Pawn).isPawn) {
                 this.chessboard[0][i] = null;
@@ -160,7 +154,7 @@ export class BoardComponent {
         this.turn = !this.turn
     }
 
-    isCellPossibleMoves(position: Position) {
+    isCellPossibleMoves(position: Position): string {
         const ifPossible: boolean = this.bcPossibleMoves.some((posPos: {y: number, x: number}) => (posPos.x === position.x) && (posPos.y === position.y))
         if (ifPossible) {
             return '#883838';

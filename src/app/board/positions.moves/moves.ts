@@ -1,56 +1,141 @@
-export function getStraightMoves (this: any) {
-    this.moviesForFigure = []
+import { Figure } from "../figures/figure";
+import { PositionArray } from "./types";
+
+export function getStraightMoves (context: Figure, isUnderAttack: boolean): PositionArray {
+    context.moviesForFigure = []
+    // like a rook
     for (let i=1; i<8; i++) {
-        if (this.chessboard[this.position.y][this.position.x-i] === null) {
-            this.moviesForFigure.push({y: this.position.y, x: this.position.x-i})
+        if (context.chessboard[context.position.y][context.position.x-i] === null) {
+            context.moviesForFigure.push({y: context.position.y, x: context.position.x-i})
         }
-        if (this.chessboard[this.position.y][this.position.x-i]) {
-            if (this.chessboard[this.position.y][this.position.x-i].color === this.color) {
+        if (context.chessboard[context.position.y][context.position.x-i]) {
+            if ((context.chessboard[context.position.y][context.position.x-i] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y, x: context.position.x-i});
+                }
                 break;
             } else {
-                this.moviesForFigure.push({y: this.position.y, x: this.position.x-i});
+                context.moviesForFigure.push({y: context.position.y, x: context.position.x-i});
                 break;
             }
         }
     }
     for (let i=1; i<8; i++) {
-        if (this.chessboard[this.position.y][this.position.x+i] === null) {
-            this.moviesForFigure.push({y: this.position.y, x: this.position.x+i})
+        if (context.chessboard[context.position.y][context.position.x+i] === null) {
+            context.moviesForFigure.push({y: context.position.y, x: context.position.x+i})
         }
-        if (this.chessboard[this.position.y][this.position.x+i]) {
-            if (this.chessboard[this.position.y][this.position.x+i].color === this.color) {
+        if (context.chessboard[context.position.y][context.position.x+i]) {
+            if ((context.chessboard[context.position.y][context.position.x+i] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y, x: context.position.x+i});
+                }
                 break;
             } else {
-                this.moviesForFigure.push({y: this.position.y, x: this.position.x+i});
+                context.moviesForFigure.push({y: context.position.y, x: context.position.x+i});
                 break;
             }
         }
     }
     for (let i=1; i<8; i++) {
-        if (this.chessboard[this.position.y+i] && this.chessboard[this.position.y+i][this.position.x] === null) {
-            this.moviesForFigure.push({y: this.position.y+i, x: this.position.x})
+        if (context.chessboard[context.position.y+i] && context.chessboard[context.position.y+i][context.position.x] === null) {
+            context.moviesForFigure.push({y: context.position.y+i, x: context.position.x})
         }
-        if (this.chessboard[this.position.y+i] && this.chessboard[this.position.y+i][this.position.x]) {
-            if (this.chessboard[this.position.y+i][this.position.x].color === this.color) {
+        if (context.chessboard[context.position.y+i] && context.chessboard[context.position.y+i][context.position.x]) {
+            if ((context.chessboard[context.position.y+i][context.position.x] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y+i, x: context.position.x});
+                }
                 break;
             } else {
-                this.moviesForFigure.push({y: this.position.y+i, x: this.position.x});
+                context.moviesForFigure.push({y: context.position.y+i, x: context.position.x});
                 break;
             }
         }
     }
     for (let i=1; i<8; i++) {
-        if (this.chessboard[this.position.y-i] && this.chessboard[this.position.y-i][this.position.x] === null) {
-            this.moviesForFigure.push({y: this.position.y-i, x: this.position.x})
+        if (context.chessboard[context.position.y-i] && context.chessboard[context.position.y-i][context.position.x] === null) {
+            context.moviesForFigure.push({y: context.position.y-i, x: context.position.x})
         }
-        if (this.chessboard[this.position.y-i] && this.chessboard[this.position.y-i][this.position.x]) {
-            if (this.chessboard[this.position.y-i][this.position.x].color === this.color) {
+        if (context.chessboard[context.position.y-i] && context.chessboard[context.position.y-i][context.position.x]) {
+            if ((context.chessboard[context.position.y-i][context.position.x] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y+i, x: context.position.x});
+                }
                 break;
             } else {
-                this.moviesForFigure.push({y: this.position.y-i, x: this.position.x});
+                context.moviesForFigure.push({y: context.position.y-i, x: context.position.x});
+                break;
+            }
+        }
+    } 
+    return context.moviesForFigure;
+}
+
+export function getDiagonalMoves (context: Figure, isUnderAttack: boolean): PositionArray {
+    context.moviesForFigure = []
+    for (let i=1; i<8; i++) {
+        if (context.chessboard[context.position.y+i] && context.chessboard[context.position.y+i][context.position.x-i] === null) {
+            context.moviesForFigure.push({y: context.position.y+i, x: context.position.x-i})
+        }
+        if (context.chessboard[context.position.y+i] && context.chessboard[context.position.y+i][context.position.x-i]) {
+            if ((context.chessboard[context.position.y+i][context.position.x-i] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y+i, x: context.position.x-i});
+                }
+                break;
+            } else {
+                context.moviesForFigure.push({y: context.position.y+i, x: context.position.x-i});
                 break;
             }
         }
     }
-    return this.moviesForFigure;
+    for (let i=1; i<8; i++) {
+        if (context.chessboard[context.position.y-i] && context.chessboard[context.position.y-i][context.position.x+i] === null) {
+            context.moviesForFigure.push({y: context.position.y-i, x: context.position.x+i})
+        }
+        if (context.chessboard[context.position.y-i] && context.chessboard[context.position.y-i][context.position.x+i]) {
+            if ((context.chessboard[context.position.y-i][context.position.x+i] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y-i, x: context.position.x+i});
+                }
+                break;
+            } else {
+                context.moviesForFigure.push({y: context.position.y-i, x: context.position.x+i});
+                break;
+            }
+        }
+    }
+    for (let i=1; i<8; i++) {
+        if (context.chessboard[context.position.y+i] && context.chessboard[context.position.y+i][context.position.x+i] === null) {
+            context.moviesForFigure.push({y: context.position.y+i, x: context.position.x+i})
+        }
+        if (context.chessboard[context.position.y+i] && context.chessboard[context.position.y+i][context.position.x+i]) {
+            if ((context.chessboard[context.position.y+i][context.position.x+i] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y+i, x: context.position.x+i});
+                }
+                break;
+            } else {
+                context.moviesForFigure.push({y: context.position.y+i, x: context.position.x+i});
+                break;
+            }
+        }
+    }
+    for (let i=1; i<8; i++) {
+        if (context.chessboard[context.position.y-i] && context.chessboard[context.position.y-i][context.position.x-i] === null) {
+            context.moviesForFigure.push({y: context.position.y-i, x: context.position.x-i})
+        }
+        if (context.chessboard[context.position.y-i] && context.chessboard[context.position.y-i][context.position.x-i]) {
+            if ((context.chessboard[context.position.y-i][context.position.x-i] as Figure).color === context.color) {
+                if(isUnderAttack) {
+                    context.moviesForFigure.push({y: context.position.y-i, x: context.position.x-i});
+                }
+                break;
+            } else {
+                context.moviesForFigure.push({y: context.position.y-i, x: context.position.x-i});
+                break;
+            }
+        }
+    }
+    return context.moviesForFigure;
 }

@@ -1,12 +1,13 @@
 import {Figure} from '../figures/figure';
 import {Position} from '../positions.moves/position'
 import {AbstractFigure} from '../figures/figure'
+import { PositionArray } from '../positions.moves/types';
 
 export class Pawn extends AbstractFigure implements Figure  {
     name = 'Pawn';
     isPawn: boolean = true;
     possibleAttackPawn () {
-        let protectedCell: any[] = [];
+        let protectedCell: PositionArray = [];
         if (this.color) {
             if (this.chessboard[this.position.y-1] && this.chessboard[this.position.y-1][this.position.x-1] !== 'undefined') {
                 if(this.position.y-1>=0 && this.position.y-1<8 && this.position.x-1>=0 && this.position.x-1<8) {

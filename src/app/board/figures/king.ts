@@ -78,14 +78,14 @@ export class King extends AbstractFigure implements Figure  {
 
     // Castling white
 
-    // if (this.chessboard[7][4] && (this.chessboard[7][4] as King).kingNotMove &&
-    // this.chessboard[7][7] && (this.chessboard[7][7] as Rook).rookNotMove &&
-    // this.chessboard[7][6] === null &&
-    // this.chessboard[7][5] === null &&
-    // this.chessboard.kingUnderShah === false
-    // ) {
+    if (this.chessboard[7][4] && (this.chessboard[7][4] as King).kingNotMove &&
+    this.chessboard[7][7] && (this.chessboard[7][7] as Rook).rookNotMove &&
+    this.chessboard[7][6] === null &&
+    this.chessboard[7][5] === null &&
+    this.chessboard.kingUnderShah === false
+    ) {
 
-    // }
+    }
 
     // Castling black
 
