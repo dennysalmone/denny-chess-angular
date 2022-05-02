@@ -139,3 +139,105 @@ export function getDiagonalMoves (context: Figure, isUnderAttack: boolean): Posi
     }
     return context.moviesForFigure;
 }
+
+export function getLTypeMoves (context: Figure, isUnderAttack: boolean): PositionArray {
+    context.moviesForFigure = []
+    if (context.chessboard[context.position.y+2] && context.chessboard[context.position.y+2][context.position.x+1] === null) {
+        context.moviesForFigure.push({y: context.position.y+2, x: context.position.x+1})
+    }
+    if (context.chessboard[context.position.y+2] && context.chessboard[context.position.y+2][context.position.x+1]) {
+        if ((context.chessboard[context.position.y+2][context.position.x+1] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y+2, x: context.position.x+1});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y+2, x: context.position.x+1});
+        }
+    }
+    if (context.chessboard[context.position.y+2] && context.chessboard[context.position.y+2][context.position.x-1] === null) {
+        context.moviesForFigure.push({y: context.position.y+2, x: context.position.x-1})
+    }
+    if (context.chessboard[context.position.y+2] && context.chessboard[context.position.y+2][context.position.x-1]) {
+        if ((context.chessboard[context.position.y+2][context.position.x-1] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y+2, x: context.position.x-1});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y+2, x: context.position.x-1});
+        }
+    }
+    if (context.chessboard[context.position.y-2] && context.chessboard[context.position.y-2][context.position.x+1] === null) {
+        context.moviesForFigure.push({y: context.position.y-2, x: context.position.x+1})
+    }
+    if (context.chessboard[context.position.y-2] && context.chessboard[context.position.y-2][context.position.x+1]) {
+        if ((context.chessboard[context.position.y-2][context.position.x+1] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y-2, x: context.position.x+1});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y-2, x: context.position.x+1});
+        }
+    }
+    if (context.chessboard[context.position.y-2] && context.chessboard[context.position.y-2][context.position.x-1] === null) {
+        context.moviesForFigure.push({y: context.position.y-2, x: context.position.x-1})
+    }
+    if (context.chessboard[context.position.y-2] && context.chessboard[context.position.y-2][context.position.x-1]) {
+        if ((context.chessboard[context.position.y-2][context.position.x-1] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y-2, x: context.position.x-1});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y-2, x: context.position.x-1});
+        }
+    }
+    // 2 part
+    if (context.chessboard[context.position.y+1] && context.chessboard[context.position.y+1][context.position.x+2] === null) {
+        context.moviesForFigure.push({y: context.position.y+1, x: context.position.x+2})
+    }
+    if (context.chessboard[context.position.y+1] && context.chessboard[context.position.y+1][context.position.x+2]) {
+        if ((context.chessboard[context.position.y+1][context.position.x+2] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y+1, x: context.position.x+2});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y+1, x: context.position.x+2});
+        }
+    }
+    if (context.chessboard[context.position.y+1] && context.chessboard[context.position.y+1][context.position.x-2] === null) {
+        context.moviesForFigure.push({y: context.position.y+1, x: context.position.x-2})
+    }
+    if (context.chessboard[context.position.y+1] && context.chessboard[context.position.y+1][context.position.x-2]) {
+        if ((context.chessboard[context.position.y+1][context.position.x-2] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y+1, x: context.position.x-2});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y+1, x: context.position.x-2});
+        }
+    }
+    if (context.chessboard[context.position.y-1] && context.chessboard[context.position.y-1][context.position.x+2] === null) {
+        context.moviesForFigure.push({y: context.position.y-1, x: context.position.x+2})
+    }
+    if (context.chessboard[context.position.y-1] && context.chessboard[context.position.y-1][context.position.x+2]) {
+        if ((context.chessboard[context.position.y-1][context.position.x+2] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y-1, x: context.position.x+2});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y-1, x: context.position.x+2});
+        }
+    }
+    if (context.chessboard[context.position.y-1] && context.chessboard[context.position.y-1][context.position.x-2] === null) {
+        context.moviesForFigure.push({y: context.position.y-1, x: context.position.x-2})
+    }
+    if (context.chessboard[context.position.y-1] && context.chessboard[context.position.y-1][context.position.x-2]) {
+        if ((context.chessboard[context.position.y-1][context.position.x-2] as Figure).color === context.color) {
+            if(isUnderAttack) {
+                context.moviesForFigure.push({y: context.position.y-1, x: context.position.x-2});
+            }
+        } else {
+            context.moviesForFigure.push({y: context.position.y-1, x: context.position.x-2});
+        }
+    }
+return context.moviesForFigure;
+}
